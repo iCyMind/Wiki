@@ -18,4 +18,4 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -razI -e 'ssh -p 11235 -o StrictHostKeyChecking=no -o CheckHostIP=no' $TRAVIS_BUILD_DIR/site/* simon@deploy.icymind.com:/srv/www/icymind.com/wiki
+  script: rsync -ravz -e 'ssh -p 11235 -o StrictHostKeyChecking=no -o CheckHostIP=no' $TRAVIS_BUILD_DIR/site/* simon@deploy.icymind.com:/srv/www/icymind.com/wiki
