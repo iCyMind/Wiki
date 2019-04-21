@@ -1,0 +1,80 @@
+### 第三章
+- printf 函数要如何显示八进制和十六进制的0和0x 前缀? 如何将一个长整数以16或者8进制打印?
+    - %#o / %#x
+- C仅仅保证 short 类型不会比 int 类型长，long 类型不会比 int 类型短， 只保证long double至少同 double 类型一样精确。
+- 在64位 OSX 上，char、short、int、long、long long 的长度分别为：1、2、4、8、8字节。float、double、long double 分别为：4、8、16个字节。
+- 如何把一个常量当做 long 来看待，如何当成 long long 来看待？float、double、long double 呢？
+    - 17L / 17LL / 17.0f / 默认就是 double / ~~17.0ld~~ 17.0L
+- C 将字符常量当做 int 类型对吗？
+    - yes
+    - 不仅如此，而且 char 变量在运算中都会自动提升为 int，char 变量作为参数传入函数时，也会自动提升
+- C将连续的字符串合并为一个串。
+    - "a string""another string"
+
+### 第四章
+- strlen（）函数由哪个头文件提供？
+    - `#include <string.h>`
+- scanf 在读取输入时会自动在末尾加上'\0'空字符。
+- sizeof 和 strlen 的异同？
+    - sizeof会把末尾的'\0'也算上，strlen 不会。
+- 预编译指令的语法？
+    - `#include <string.h>`
+    - `#define PI 3.1415`
+    - 没有分号，也没有等号
+- 转换说明符%a、%A、%g、%G 的含义？
+    - %a 十六进制浮点数 p 指数表示法
+    - %A 十六进制浮点数 P 指数表示法
+    - %g 用于浮点数。当指数小于-4或者大于等于精度时用 e 计数法，否用十进制计数法
+    - %G 同上。e 改为 E
+- printf 修饰符 h、hh、t、z 的含义？
+    - 都是和整数转换指示符一起使用
+    - h 表示 short int / unsigned short int，hh 表示signed char / unsigned char
+    - t 表示 ptrdiff_t 值，和两个指针之间的差相对应的类型
+    - z 表示一个 size_t类型
+- printf 的标志“空格”的含义？
+    - 如果是负数，显示符号。如果是整数，显示前导空格
+- %f、%e 的默认宽度和默认精度？
+    - 默认精度是6，默认宽度恰好容纳该数
+- %44s 字符串是怎么补齐宽度的？
+    - 用前导空格补齐宽度
+- printf 如果参数不匹配，会有什么后果？多个参数时，第一个不匹配，后面的匹配，是什么结果？
+    - 指示编译器解析一个不匹配的内存数据，结果不可预测
+    - 调用函数时，参数是压到堆栈的。假设第一个参数是32位的数据，如果指示编译器按照64位数据来解释它，那么便破坏了后续参数，结果不可预测。
+- printf和 scanf的返回值？
+    - printf的返回值是打印的字符的个数，包括空格和换行等
+    - scanf返回成功读入项目的个数
+- scanf 和 printf 最大的区别？
+    - 参数的类型。scanf 的参数是指针，因此需要添加&. printf不需要
+- scanf用什么转换说明符指示 float类型？用什么指示 double 类型？
+    - le/lf/lg
+- scanf("%d,  %d", &n, &m)，如何输入才能将两个整数存入 n 和 m？
+    - n逗号空格m
+- scanf("%c", &ch)和scanf("   %c", &ch)有何区别？
+    - 前者会读入第一个字符(允许空格)，后者会读入第一个非空格字符
+- *修饰符在 printf 和 scanf 中的作用分别为？
+    - 在前者充当宽度的占位符，在后者表示跳过该项目
+
+### 第五章 运算符/表达式/语句
+- 运算符 sizeof 返回的是什么类型
+    - size_t，是无符号整数类型
+- 11%-5 / -11%5 / -11%-5 各是什么结果
+    - 1/-1/-1
+    - a-(a/b*b)
+- ++/-- 运算符有什么坑
+    - 当一个变量出现在同一个函数的多个参数时，使用++/--会有不可预期的结果
+    - 当一个变量出现在同一个表达式的多个位置时，不要用
+- 什么是表达式的副作用
+    - 4 + 6是一个表达式，C 将计算它的值为10
+    - states = 50也是一个表达式，C将计算它的值为50。然而副作用是 states 的值变成了50.++/--也有副作用
+- 什么是顺序点
+    - 是程序执行中的一点：在该点处，所有的副作用都在进入下一步前被计算
+    - 任何一个完整的表达式的结束也是一个顺序点
+    - 完整语句包含while 循环里作为判断条件的表达式
+- 类型级别的顺序是什么
+    - long double > double > float > unsigned long long > long long > unsigned long > long > unsigned int > int
+- 什么是指派运算符(cast operator)
+    - (type)
+- void somefunc() 和 void somefunc(void) 如何选择
+    - void somefunc(void)更规范
+- 参数 argument 和参量 parameter 这两个术语如何规范使用
+    - argument 指实参， parameter指形参
