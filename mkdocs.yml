@@ -1,0 +1,7 @@
+site_name: icy wiki
+theme: readthedocs
+nav:
+  - Home: index.md
+  - About: about.md
+
+
